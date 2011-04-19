@@ -23,7 +23,6 @@ class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
 <code>
 import sbt._
 import au.kenbot.createandeditplugin._
-
 class MyProject(info: ProjectInfo) extends DefaultProject(info) 
     with CreateAndEditPlugin 
     with TestWithScalaTest // or TestWithJUnit
