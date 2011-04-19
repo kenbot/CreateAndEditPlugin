@@ -48,7 +48,7 @@ Files are created, and sent to the editor:
 [info] Created C:\dev\Projects\MyProject\src\test\scala\com\grocery\PotatoSpec.scala
 [info]
 [info] == class ==
-[info] Executing C:\Program Files (x86)\eclipse\eclipse.exe C:\dev\Projects\MyProject\src\main\scala\com\grocery\Potato.scala C:\dev\MyProject\SimpleGame\src\test\scala\com\grocery\PotatoSpec.scala...
+[info] Executing C:\Program Files (x86)\eclipse\eclipse.exe C:\dev\Projects\MyProject\src\main\scala\com\grocery\Potato.scala C:\dev\Projects\MyProject\src\test\scala\com\grocery\PotatoSpec.scala...
 </code>
 </pre>
 
