@@ -1,9 +1,91 @@
 
 
-This is a ==<a href="http://code.google.com/p/simple-build-tool/">simple-build-tool</a>== plugin that very simply lets you declare Scala classes, traits and objects from the SBT command line,  
-It then not only generates source and test files, but loads them in your favourite editor.
+This is a <a href="http://code.google.com/p/simple-build-tool/">simple-build-tool</a> plugin that lets you declare and edit Scala classes, 
+traits and objects from the SBT command line, and automatically load them into your favourite editor.
 
 h1. Usage
 
-TBC
+1. Download and unzip the project, and run "sbt publish-local"
 
+2.  In your project/plugins/Plugins.scala:
+<pre>
+<code>
+import sbt._
+
+class Plugins(info: ProjectInfo) extends PluginDefinition(info) {
+  val createAndEditPlugin = "kenbot" % "createandeditplugin" % "0.1.1" 
+}
+</code>
+</pre>
+
+3. In your project/build/<myproject>.scala, mixin the plugin:
+<pre>
+<code>
+import sbt._
+import au.kenbot.createandeditplugin._
+
+class MyProject(info: ProjectInfo) extends DefaultProject(info) 
+    with CreateAndEditPlugin 
+    with TestWithScalaTest // or TestWithJUnit
+    with EditInEclipse { // or EditInNotepad_++ or EditInVim
+    
+}
+</code>
+</pre>
+
+The TestWith... and EditIn... mixins are optional, and some built-in alternatives are supplied.  It is straightforward to provide your own.
+
+4. At the SBT prompt, declare classes, traits or objects:
+<pre>
+<code>
+> class com.grocery.Potato
+</code>
+</pre>
+
+Files are created, and sent to the editor:
+<pre>
+<code>
+[info] Created C:\dev\Projects\MyProject\src\main\scala\com\grocery\Potato.scala
+[info] Created C:\dev\Projects\MyProject\src\test\scala\com\grocery\PotatoSpec.scala
+[info]
+[info] == class ==
+[info] Executing C:\Program Files (x86)\eclipse\eclipse.exe C:\dev\Projects\MyProject\src\main\scala\com\grocery\Potato.scala C:\dev\MyProject\SimpleGame\src\test\scala\com\grocery\PotatoSpec.scala...
+</code>
+</pre>
+
+The files are populated by overridable templates:
+<pre>
+<code>
+package com.grocery
+
+class Potato {
+
+}
+</code>
+</pre>
+
+<pre>
+<code>
+package com.grocery
+import org.scalatest._
+import matchers._
+
+class PotatoSpec extends Spec with ShouldMatchers {
+  describe("Potato") {
+    it("should") {
+    
+    }
+  }
+}
+</code>
+</pre>
+
+5. You can also directly call the edit command to send files to the editor:
+<pre>
+<code>
+> edit project/build.properties
+[info]
+[info] == edit ==
+[info] Executing C:\Program Files (x86)\eclipse\eclipse.exe project\build.properties...
+</code>
+</pre>
