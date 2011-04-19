@@ -1,0 +1,9 @@
+
+
+This is a ==<a href="http://code.google.com/p/simple-build-tool/">simple-build-tool</a>== plugin that very simply lets you declare Scala classes, traits and objects from the SBT command line,  
+It then not only generates source and test files, but loads them in your favourite editor.
+
+h1. Usage
+
+TBC
+
