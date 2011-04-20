@@ -2,7 +2,6 @@ package au.kenbot.createandeditplugin
 
 import java.io.File
 import sbt._
-import java.io.File.{separator => /}
 
 object CreateAndEditPlugin {
   
@@ -73,15 +72,15 @@ trait CreateAndEditPlugin {
       case -1 => fullClassName
       case n => fullClassName.substring(n+1, fullClassName.length)
     }
-    val path = pkg.replace(".", /)
+    val path = pkg.replace('.', '/')
     val packageDecl = if (path.length > 0) "package " + pkg else ""
     
-    val formattedSourceFile = sourceDirectoryForCreation + / + sourceFileName.format(path, className)
+    val formattedSourceFile = sourceDirectoryForCreation + '/' + sourceFileName.format(path, className)
     val sourceFileContent = sourceFileTemplate.stripMargin.format(packageDecl, declType, className)
     val sourceFile = createFileContent(formattedSourceFile, sourceFileContent)
 
     val testFile = for (fname <- testFileName; templ <- testFileTemplate) yield {
-      val formattedTestFile = testDirectoryForCreation + / + fname.format(path, className)
+      val formattedTestFile = testDirectoryForCreation + '/' + fname.format(path, className)
       val testFileContent = templ.stripMargin.format(packageDecl, className)
       createFileContent(formattedTestFile, testFileContent)
     }
@@ -107,7 +106,7 @@ trait CreateAndEditPlugin {
    * For example, if <code>class com.foo.Bar</code> was entered at the SBT command line, then 
    * <code>override def sourceFileName = "%s/%s.scala"</code> would yield "com/foo/Bar.scala".
    */
-  def sourceFileName = "%s" + / + "%s.scala"
+  def sourceFileName = "%s/%s.scala"
   
   /**
    *  The content of the source file to be created.  The content will be formatted with the command 
@@ -190,31 +189,57 @@ trait CreateAndEditPlugin {
   /**
    * Strips quotes from around a string. Useful for cleaning directories stored in Windows environment variables.
    */
-  def stripQuotes(s: String): String = {
+  def stripQuotes(s: String): String = 
     if (s.length >= 2 && s.charAt(0) == '"' && s.charAt(s.length - 1) == '"') 
       s.substring(1, s.length-1)
-    else
+    else 
       s
-  }
+
   
   /**
    * Defines a MethodTask which accepts one or more relative path-names of files, 
-   * which are delegated to the <code>editTask()</code> method.
+   * which are delegated to the <code>editTask()</code> method.  If a fully-qualified class name is given, 
+   * it will attempt to load an equivalent matching file.  For example, com.foo.Bar would be interpreted as com/foo/Bar.scala.
    */
   lazy val edit = task {args =>
+  
+    def transformClassNameToFile(fileOrFullClassName: String): File = {
+      val isClassName = fileOrFullClassName.contains('.') && 
+          !fileOrFullClassName.contains('/') && 
+          !fileOrFullClassName.contains('\\')
+
+      if (isClassName) {
+        val fileName = fileOrFullClassName.replace('.', '/') + ".scala"
+        findRelativeFile(fileName) getOrElse new File(sourceDirectoryForCreation + '/' + fileName)
+      }
+      else {
+        new File(fileOrFullClassName)
+      }
+    }
+
+
     if (args.length > 0) {
-      editTask(args.map(f => new File(f)).toList)
+      editTask(args map transformClassNameToFile toList)
     }
     else {
       task {Some("Usage: edit file1 [file2..n]")}
     }
-  } describedAs EditTaskDescription
+  } describedAs EditTaskDescription 
 
+  private def findRelativeFile(relativeFileName: String): Option[File] = {
+    val dirsToCheck = (mainSourceRoots +++ testSourceRoots).getPaths
+    val validDirOpt = dirsToCheck.find(d => new File(d + '/' + relativeFileName).exists)
+    validDirOpt.map(d => new File(d + '/' + relativeFileName))
+  }
+  
   /**
    * Edits the given files, by sending them to the shell command defined by <code>editorCommand</code>.
    */
   def editTask(files: List[File]) = task {
     for (ec <- editorCommand) {
+      files filter (!_.exists) foreach {f =>
+        log.info("File not found: " + f)
+      }
       val execArgs = (ec :: files.map(_.getPath)).toArray
       log.info("Executing " + execArgs.mkString(" ") + "...")
       exec(execArgs).run

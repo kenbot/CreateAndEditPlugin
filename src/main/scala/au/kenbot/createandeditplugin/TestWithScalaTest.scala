@@ -1,11 +1,10 @@
 package au.kenbot.createandeditplugin
 import sbt._
-import java.io.File.{separator => /}
 
 trait TestWithScalaTest extends CreateAndEditPlugin {
   this: Project with Exec with ScalaPaths =>
   
-  override def testFileName: Option[String] = Some("%s" + / + "%sSpec.scala")
+  override def testFileName: Option[String] = Some("%s/%sSpec.scala")
   override def testFileTemplate = Some("""
     |%s
     |import org.scalatest._

@@ -6,5 +6,5 @@ trait EditInEclipse extends CreateAndEditPlugin {
   this: Project with Exec with ScalaPaths  =>
   
   def eclipseHome = stripQuotes(System.getenv("ECLIPSE_HOME"))
-  override def editorCommand = Some(eclipseHome + / + "eclipse.exe")
+  override def editorCommand = Some(eclipseHome + "/eclipse.exe")
 }
