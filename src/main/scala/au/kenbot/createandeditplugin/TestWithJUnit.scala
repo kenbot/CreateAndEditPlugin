@@ -5,8 +5,7 @@ trait TestWithJUnit extends CreateAndEditPlugin {
   this: Project with Exec with ScalaPaths =>
   
   override def testFileName: Option[String] = Some("%s/%sTest.scala")
-  override def testFileTemplate = Some("""
-    |%s
+  override def testFileTemplate = Some("""%s
     |import org.junit._
     |
     |class %sTest {

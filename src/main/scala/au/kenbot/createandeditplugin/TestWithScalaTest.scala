@@ -5,8 +5,7 @@ trait TestWithScalaTest extends CreateAndEditPlugin {
   this: Project with Exec with ScalaPaths =>
   
   override def testFileName: Option[String] = Some("%s/%sSpec.scala")
-  override def testFileTemplate = Some("""
-    |%s
+  override def testFileTemplate = Some("""%s
     |import org.scalatest._
     |import matchers._
     |

@@ -15,8 +15,8 @@ object CreateAndEditPlugin {
   }
 
   def defaultDeclareEntityTaskDescription(declType: DeclarationType.Value) = 
-      "Declares a new %s with the given fully qualified name, " + 
-      "a corresponding test class, and optionally loads both files into the chosen editor.".format(declType)
+      "Declares a new %s with the given fully qualified name, ".format(declType) + 
+      "a corresponding test class, and optionally loads both files into the chosen editor."
       
   val EditTaskDescription = "Edits the given files in a text editor."
 
@@ -131,8 +131,7 @@ trait CreateAndEditPlugin {
    * }
    * </code>
    */
-  def sourceFileTemplate = """
-      |%s
+  def sourceFileTemplate = """%s
       |
       |%s %s {
       |
