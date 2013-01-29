@@ -17,41 +17,47 @@ object PluginDef extends Build {
  At the sbt prompt, declare classes, traits or objects:
 <pre>
 <code>
-sbt> class com.grocery.Potato
+> class com.grocery.Potato
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Potato.scala
-sbt> trait com.grocery.Blah
+> trait com.grocery.Blah
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Blah.scala
-sbt> object com.stuff.Gumball
+> object com.stuff.Gumball
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\stuff\Gumball.scala
 </code>
 </pre>
 
 If you define create-and-edit-config with a test file template in your build.sbt:
+<pre>
 <code>
 createAndEditConfig ~= (_ usingTestTemplate "package %s; class %sTest {}")
 </code>
+</pre>
 then test files will be created as well:
-
+<pre>
 <code>
-sbt> trait com.grocery.Potato
+> trait com.grocery.Potato
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Potato.scala
 Created C:\Ken\Projects\SimpleGame\src\test\scala\com\grocery\PotatoSpec.scala
 </code>
-
+</pre>
 You can also configure the test file name pattern:
+<pre>
 <code>
 createAndEditConfig ~= (_ usingTestFileName "%s/%sTest.scala")
 </code>
-
+</pre>
 If you choose an editor command:
+<pre>
 <code>
 createAndEditConfig ~= (_ editWith "~/bin/eclipse")
 </code>
+</pre>
 then the class/trait/object commands will also launch the newly created file in an editor.
 
 The <code>edit</code> command will edit files directly:
+<pre>
 <code>
-sbt> edit com.grocery.Potato
+> edit com.grocery.Potato
 Executing ~/bin/eclipse /usr/apps/myproject/src/main/scala/com/grocery/Potato.scala
 </code>
-
+</pre>
