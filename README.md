@@ -19,9 +19,9 @@ object PluginDef extends Build {
 <pre>
 <code>
 > class com.grocery.Potato
-Created C:\Ken\Projects\SimpleGame\src\main\scala\com\foo\Potato.scala
+Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Potato.scala
 > trait com.grocery.Blah
-Created C:\Ken\Projects\SimpleGame\src\main\scala\com\foo\Blah.scala
+Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Blah.scala
 > object com.stuff.Gumball
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\stuff\Gumball.scala
 </code>
@@ -34,8 +34,8 @@ createAndEditConfig ~= (_ usingTestTemplate "package %s; class %sTest {}")
 then test files will be created as well:
 <code>
 > trait com.grocery.Potato
-Created C:\Ken\Projects\SimpleGame\src\main\scala\com\foo\Potato.scala
-Created C:\Ken\Projects\SimpleGame\src\test\scala\com\foo\PotatoSpec.scala
+Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Potato.scala
+Created C:\Ken\Projects\SimpleGame\src\test\scala\com\grocery\PotatoSpec.scala
 </code>
 
 You can also configure the test file name pattern:
@@ -51,7 +51,7 @@ then the class/trait/object commands will also launch the newly created file in 
 
 The <code>edit</code> command will edit files directly:
 <code>
-> edit com.foo.Potato
-Executing ~/bin/eclipse /usr/apps/myproject/src/main/scala/com/foo/Potato.scala
+> edit com.grocery.Potato
+Executing ~/bin/eclipse /usr/apps/myproject/src/main/scala/com/grocery/Potato.scala
 </code>
 
