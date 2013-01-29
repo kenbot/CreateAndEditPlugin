@@ -17,11 +17,11 @@ object PluginDef extends Build {
  At the sbt prompt, declare classes, traits or objects:
 <pre>
 <code>
-> class com.grocery.Potato
+sbt> class com.grocery.Potato
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Potato.scala
-> trait com.grocery.Blah
+sbt> trait com.grocery.Blah
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Blah.scala
-> object com.stuff.Gumball
+sbt> object com.stuff.Gumball
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\stuff\Gumball.scala
 </code>
 </pre>
@@ -33,7 +33,7 @@ createAndEditConfig ~= (_ usingTestTemplate "package %s; class %sTest {}")
 then test files will be created as well:
 
 <code>
-/> trait com.grocery.Potato
+sbt> trait com.grocery.Potato
 Created C:\Ken\Projects\SimpleGame\src\main\scala\com\grocery\Potato.scala
 Created C:\Ken\Projects\SimpleGame\src\test\scala\com\grocery\PotatoSpec.scala
 </code>
