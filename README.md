@@ -26,6 +26,14 @@ Created C:\Ken\Projects\SimpleGame\src\main\scala\com\stuff\Gumball.scala
 </code>
 </pre>
 
+You can change the generated source file template:
+<pre>
+<code>
+createAndEditConfig ~= (_ usingSourceTemplate "package %s\n import usefulimports\n %s %s {\n}")
+</code>
+</pre>
+
+
 If you define create-and-edit-config with a test file template in your build.sbt:
 <pre>
 <code>

@@ -14,6 +14,7 @@ case class CreateAndEditConfig(
   editorCommand: String) {
   
   def editWith(cmd: String) = copy(editorCommand = cmd)
+  def usingSourceTemplate(template: String) = copy(sourceFileTemplate = template)
   def usingTestTemplate(template: String) = copy(testFileTemplate = template)
   def usingTestFileName(template: String) = copy(testFileName = template)
 }
